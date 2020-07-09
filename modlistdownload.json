@@ -88,7 +88,7 @@
     "filename": "LLOverlayReloaded-1.1.6-mc1.12.2.jar",
     "md5hash": "23f498874f1596b7a8c167ec4327b360",
     "glob": "LLOverlayReloaded-?.?.*-mc1.12.2.jar",
-    "optional": false
+    "optional": true
   },
   {
     "link": "https://www.curseforge.com/minecraft/mc-mods/techreborn/download/2966851",
@@ -221,7 +221,7 @@
     "filename": "classicbar-0.5.4.jar",
     "md5hash": "f06710fe5a77993720202101f3319764",
     "glob": "classicbar-?.?.*.jar",
-    "optional": false
+    "optional": true
   },
   {
     "link": "https://www.curseforge.com/minecraft/mc-mods/quark/download/2924091",
@@ -235,7 +235,7 @@
     "filename": "keywizard-1.12.2-1.7.3.jar",
     "md5hash": "c00876e68a57bff1f23d72e881903793",
     "glob": "keywizard-1.12.2-?.?.*.jar",
-    "optional": false
+    "optional": true
   },
   {
     "link": "https://www.curseforge.com/minecraft/mc-mods/bonsai-trees/download/2846217",
@@ -277,7 +277,7 @@
     "filename": "MouseTweaks-2.10-mc1.12.2.jar",
     "md5hash": "e4dcbf47c3f99a780681e3a3a9fcf9e9",
     "glob": "MouseTweaks-?.*-mc1.12.2.jar",
-    "optional": false
+    "optional": true
   },
   {
     "link": "https://www.curseforge.com/minecraft/mc-mods/zetta-industries/download/2636576",
@@ -312,7 +312,7 @@
     "filename": "theoneprobe-1.12-1.4.28.jar",
     "md5hash": "63849a13a822b3b56308245eb8074a7e",
     "glob": "theoneprobe-1.12-?.?.*.jar",
-    "optional": false
+    "optional": true
   },
   {
     "link": "https://www.curseforge.com/minecraft/mc-mods/opencomputers/download/2828357",
@@ -361,7 +361,7 @@
     "filename": "InventoryTweaks-1.63.jar",
     "md5hash": "1e2e33e5710394252abc4b014bc3dcbd",
     "glob": "InventoryTweaks-?.*.jar",
-    "optional": false
+    "optional": true
   },
   {
     "link": "https://www.curseforge.com/minecraft/mc-mods/codechicken-lib-1-8/download/2779848",
