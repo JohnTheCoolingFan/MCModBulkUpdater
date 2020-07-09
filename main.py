@@ -52,6 +52,16 @@ class MCBulkDownloader:
                         os.remove(oldmod)
                 self.download_mod(mod)
 
+    @staticmethod
+    def optional_ask(question):
+        answer = input(question+' [Y/n]')
+        if answer.lower() in ['no', 'n']:
+            return False
+        elif answer.lower() in ['yes', 'ye', 'y', '']:
+            return True
+        else:
+            return False
+
 if __name__ == '__main__':
     mcbd = MCBulkDownloader('modlistdownload.json')
     mcbd.StartDownload()
