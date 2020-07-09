@@ -35,6 +35,10 @@ class MCBulkDownloader:
             filename = mod['filename']
             md5hash = mod['md5hash']
 
+            if mod['optional']:
+                if not self.optional_ask('Do you want to download {}?'.format(filename)):
+                    continue
+
             if os.path.exists('mods/'+filename):
                 with open('mods/'+filename, 'rb') as modfile:
                     calculated_hash = hashlib.md5(modfile.read()).hexdigest()
