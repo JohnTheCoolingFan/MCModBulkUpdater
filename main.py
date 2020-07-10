@@ -13,6 +13,8 @@ class MCBulkDownloader:
             with open(mod_list_source, 'r') as mlfile:
                 self.mld = json.load(mlfile)
         else:
+            # In case mod list is not a local file, but a url to a file. For example:
+            #     'https://raw.githubusercontent.com/JohnTheCoolingFan/TBN3/master/modlistdownload.json'
             rqst = req.get(mod_list_source)
             if rqst.status_code == 200:
                 self.mld = rqst.json()
