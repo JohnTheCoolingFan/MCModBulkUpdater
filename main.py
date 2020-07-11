@@ -55,11 +55,6 @@ class MCBulkDownloader:
                         os.remove('mods/'+filename)
                         self.download_mod(mod)
             else:
-                oldmodlist = glob.glob('mods/'+mod['glob'])
-                if oldmodlist:
-                    print('Found old version of mod. Replacing {} with {}'.format(oldmodlist[0], mod['filename']))
-                    for oldmod in oldmodlist:
-                        os.remove(oldmod)
                 self.download_mod(mod)
 
     @staticmethod
