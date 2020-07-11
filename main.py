@@ -37,7 +37,7 @@ class MCBulkDownloader:
             mod_file.close()
         print('Finished downloading {}'.format(modinfo['filename']))
 
-    def StartDownload(self):
+    def start_download(self):
         for mod in self.mld:
             filename = mod['filename']
             md5hash = mod['md5hash']
@@ -75,4 +75,4 @@ class MCBulkDownloader:
 
 if __name__ == '__main__':
     mcbd = MCBulkDownloader('modlistdownload.json')
-    mcbd.StartDownload()
+    mcbd.start_download()
