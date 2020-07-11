@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>348</width>
-    <height>342</height>
+    <width>349</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="value">
-     <number>24</number>
+     <number>0</number>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBoxServer">
@@ -36,21 +36,6 @@
       <height>27</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>TBN2</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>WNS</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>MSS</string>
-     </property>
-    </item>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -70,7 +55,7 @@
      <rect>
       <x>10</x>
       <y>130</y>
-      <width>181</width>
+      <width>291</width>
       <height>27</height>
      </rect>
     </property>
@@ -80,19 +65,19 @@
      <rect>
       <x>10</x>
       <y>100</y>
-      <width>181</width>
+      <width>211</width>
       <height>19</height>
      </rect>
     </property>
     <property name="text">
-     <string>Путь к папке mods</string>
+     <string>Путь к папке c версией</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonTakePath">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>130</y>
+      <x>200</x>
+      <y>160</y>
       <width>100</width>
       <height>27</height>
      </rect>
@@ -127,13 +112,39 @@
      <string>Ожидание</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>160</y>
+      <width>181</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Очистить папку</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelPathInfo">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>100</y>
+      <width>111</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>?</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>348</width>
+     <width>349</width>
      <height>24</height>
     </rect>
    </property>
