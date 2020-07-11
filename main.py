@@ -20,6 +20,9 @@ class MCBulkDownloader:
                 self.mld = rqst.json()
 
     def download_mod(self, modinfo):
+        if modinfo['optional']:
+            if not self.optional_ask('Do you want to download {}?'.format(modinfo['filename'])):
+                return
         print('Downloading {}'.format(modinfo['filename']))
         if modinfo['link'].startswith('https://www.curseforge.com'):
             mod_screen = self._scraper.get(modinfo['link'], stream=True)
@@ -41,10 +44,6 @@ class MCBulkDownloader:
         for mod in self.mld:
             filename = mod['filename']
             md5hash = mod['md5hash']
-
-            if mod['optional']:
-                if not self.optional_ask('Do you want to download {}?'.format(filename)):
-                    continue
 
             if os.path.exists('mods/'+filename):
                 with open('mods/'+filename, 'rb') as modfile:
