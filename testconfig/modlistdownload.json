@@ -169,12 +169,15 @@
     "optional": false
   },
   {
+<<<<<<< HEAD:modlistdownload.json
+=======
     "link": "https://www.curseforge.com/minecraft/mc-mods/extreme-reactors/download/2722271",
     "filename": "ExtremeReactors-1.12.2-0.4.5.67.jar",
     "md5hash": "92e5cc48aca43add940af096e7694141",
     "optional": false
   },
   {
+>>>>>>> 050494864ee0953eb09bc57eb3002be62cf9f6a8:testconfig/modlistdownload.json
     "link": "https://www.curseforge.com/minecraft/mc-mods/thermal-foundation/download/2926428",
     "filename": "ThermalFoundation-1.12.2-2.6.7.1-universal.jar",
     "md5hash": "6eca041bbf28949b60ecf1179d561156",
@@ -205,12 +208,15 @@
     "optional": true
   },
   {
+<<<<<<< HEAD:modlistdownload.json
+=======
     "link": "https://www.curseforge.com/minecraft/mc-mods/bonsai-trees/download/2846217",
     "filename": "bonsaitrees-1.1.4-b170.jar",
     "md5hash": "136677befb5a253b867c8fde52bfa11b",
     "optional": false
   },
   {
+>>>>>>> 050494864ee0953eb09bc57eb3002be62cf9f6a8:testconfig/modlistdownload.json
     "link": "https://www.curseforge.com/minecraft/mc-mods/mcmultipart/download/2615930",
     "filename": "MCMultiPart-2.5.3.jar",
     "md5hash": "47987d111d6f1e48403bc3cbb23f5503",
@@ -247,7 +253,7 @@
     "optional": false
   },
   {
-    "link": "https://www.curseforge.com/minecraft/mc-mods/crafttweaker/download/2958236",
+    "link": "https://www.curseforge.com/minecraft/mc-mods/crafttweaker/download/2996711",
     "filename": "CraftTweaker2-1.12-4.1.20.580.jar",
     "md5hash": "a3a8df2775f73c7f59eb85e423a114de",
     "optional": false
@@ -376,6 +382,34 @@
     "link": "https://www.curseforge.com/minecraft/mc-mods/ender-io-zoo/download/2989199",
     "filename": "EnderIO-zoo-1.12.2-5.2.59.jar",
     "md5hash": "48b1c871040aa487dcc45ba072230ac5",
+    "optional": false
+  },
+  {
+    "link": "https://www.curseforge.com/minecraft/mc-mods/galaxy-space-addon-for-galacticraft/download/2946091",
+    "filename": "GalaxySpace-1.12.2-2.0.13.jar",
+    "md5hash": "f779565a8a6d03bfeaa76e8ff156e084",
+    "glob": "GalaxySpace-1.12.2-?.?.*.jar",
+    "optional": false
+  },
+  {
+    "link": "https://www.curseforge.com/minecraft/mc-mods/asmodeuscore/download/2950369",
+    "filename": "AsmodeusCore-1.12.2-0.0.15.jar",
+    "md5hash": "9f42dad32d0ee1322267d24a0ec26e46",
+    "glob": "AsmodeusCore-1.12.2-?.?.*.jar",
+    "optional": false
+  },
+  {
+    "link": "https://www.curseforge.com/minecraft/mc-mods/nuclearcraft-mod/download/2995656",
+    "filename": "NuclearCraft-2.18v-1.12.2.jar",
+    "md5hash": "ccfde7cfab8785fa921e8ae4c8451e6e",
+    "glob": "NuclearCraft-?.*v-1.12.2.jar",
+    "optional": false
+  },
+  {
+    "link": "https://www.curseforge.com/minecraft/mc-mods/wanionlib/download/2807433",
+    "filename": "WanionLib-1.12.2-2.4.jar",
+    "md5hash": "98eaacdc2b62a0d1bd47fefa2308713c",
+    "glob": "WanionLib-1.12.2-?.*.jar",
     "optional": false
   }
 ]

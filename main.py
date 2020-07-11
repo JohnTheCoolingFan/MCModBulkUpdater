@@ -1,5 +1,4 @@
 import requests as req
-import glob
 import hashlib
 import os
 import json
@@ -20,6 +19,9 @@ class MCBulkDownloader:
                 self.mld = rqst.json()
 
     def download_mod(self, modinfo):
+        if modinfo['optional']:
+            if not self.optional_ask('Do you want to download {}?'.format(modinfo['filename'])):
+                return
         print('Downloading {}'.format(modinfo['filename']))
         if modinfo['link'].startswith('https://www.curseforge.com'):
             mod_screen = self._scraper.get(modinfo['link'], stream=True)
@@ -37,14 +39,10 @@ class MCBulkDownloader:
             mod_file.close()
         print('Finished downloading {}'.format(modinfo['filename']))
 
-    def StartDownload(self):
+    def start_download(self):
         for mod in self.mld:
             filename = mod['filename']
             md5hash = mod['md5hash']
-
-            if mod['optional']:
-                if not self.optional_ask('Do you want to download {}?'.format(filename)):
-                    continue
 
             if os.path.exists('mods/'+filename):
                 with open('mods/'+filename, 'rb') as modfile:
@@ -56,11 +54,6 @@ class MCBulkDownloader:
                         os.remove('mods/'+filename)
                         self.download_mod(mod)
             else:
-                oldmodlist = glob.glob('mods/'+mod['glob'])
-                if oldmodlist:
-                    print('Found old version of mod. Replacing {} with {}'.format(oldmodlist[0], mod['filename']))
-                    for oldmod in oldmodlist:
-                        os.remove(oldmod)
                 self.download_mod(mod)
 
     @staticmethod
@@ -75,4 +68,4 @@ class MCBulkDownloader:
 
 if __name__ == '__main__':
     mcbd = MCBulkDownloader('modlistdownload.json')
-    mcbd.StartDownload()
+    mcbd.start_download()
