@@ -10,11 +10,17 @@ class GetConfig:
         listConf = Settings.allKeys()
         if not("oldservers" in listConf):
             temp_result = requests.get(servers)
-            Settings.setValue("oldservers",)
+            if temp_result.status_code == 200:
+                Settings.setValue("oldservers",temp_result.json())
+            else:
+                return "Not servers config" #TODO init this error
         for server in Settings.value("oldservers"):
             if not(server in listConf):
-                Settings.setValue(server,requests.get(Settings.value("oldservers")[server]).json())
-            print("servers",server,)
+                temp_result = requests.get(Settings.value("oldservers")[server]).json()
+                if temp_result.status_code == 200:
+                    Settings.setValue(server,temp_result.json())
+                else:
+                    return "Not config server!"
 
 
 
