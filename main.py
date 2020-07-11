@@ -1,5 +1,4 @@
 import requests as req
-import glob
 import hashlib
 import os
 import json
