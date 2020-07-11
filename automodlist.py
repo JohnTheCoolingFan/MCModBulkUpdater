@@ -5,7 +5,7 @@ import hashlib
 files = glob.glob('*')
 files.remove('automodlist.py')
 
-with open('modlistdownload.json', 'r') as mlfile:
+with open('testconfig/modlistdownload.json', 'r') as mlfile:
     mdl = json.load(mlfile)
     for file in files:
         if file not in [mentry['filename'] for mentry in mdl]:
@@ -19,6 +19,6 @@ with open('modlistdownload.json', 'r') as mlfile:
     print('Finished gathering info, writing changes to file.')
     mlfile.close()
 
-with open('modlistdownload.json', 'w') as mlfile:
+with open('testconfig/modlistdownload.json', 'w') as mlfile:
     json.dump(mdl, mlfile)
     mlfile.close()
