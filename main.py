@@ -26,7 +26,7 @@ class MCBulkDownloader:
         if modinfo['link'].startswith('https://www.curseforge.com'):
             mod_screen = self._scraper.get(modinfo['link'], stream=True)
 
-            soup = BeautifulSoup(mod_screen.text)
+            soup = BeautifulSoup(mod_screen.text,features="html.parser")
             haslink = soup.findAll("p", {"class": "text-sm"})[0]
 
             mod_download = self._scraper.get("https://www.curseforge.com"+haslink.findAll("a", href=True)[0].get('href'),stream=True)

@@ -143,10 +143,12 @@ class Ui(QtWidgets.QMainWindow):
             if not(NewMod):
                 os.remove(path + "/mods/" + oldMod["filename"])
                 continue
-            print(os.path.isfile(path + "/mods/" + oldMod["filename"]))
-            if not(os.path.exists(path + "/mods/" + oldMod["filename"])):
+            modfile = Path(path + "/mods/" + NewMod["filename"])
+            if not(modfile.exists()):
                 listModsToDownload.append(NewMod)
         self.DownloadWorkerMain(path,listModsToDownload)
+        self.nowServer["modList"] = NewServerMods
+        self.settings.setValue(self.nowServer["name"], self.nowServer)
 
 
 
