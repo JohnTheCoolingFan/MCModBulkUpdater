@@ -106,13 +106,79 @@ class Ui(QtWidgets.QMainWindow):
         self.settings.setValue(self.nowServer["name"], self.nowServer)
         self.check_path()
 
+    def findByName(self,name,ListMods): #Костыль лять
+        for mod in ListMods:
+            if mod["filename"] == name:
+                return mod
+        else:
+            return None
+
     def downloadAll(self):
-        print(self.nowServer["git"],self.nowServer["path"])
-        self.GetConfig.CloneGit(self.nowServer["path"],self.nowServer["git"])
-        print("git has got")
+        listModsToDownload = []
+        path = self.nowServer["path"]
+        self.labelCountMods.setText("Скачивание конфигов")
+        print(self.nowServer["git"],path)
+        self.GetConfig.CloneGit(self.nowServer["git"],path+"/ZipClone.zip",self.progressBar)
+        self.labelCountMods.setText("Скачивание модов")
+        if self.nowServer["modList"]:
+            OldServerMods = self.nowServer["modList"]
+        else:
+            OldServerMods = None
+        NewServerMods = self.GetConfig.ListMods(path)
+
+        if not(OldServerMods):
+            self.nowServer["modList"] = NewServerMods
+            self.DownloadWorkerMain(path, listModsToDownload)
+            self.settings.setValue(self.nowServer["name"], self.nowServer)
+            return
+
+        for NewMod in NewServerMods:
+            oldMod = self.findByName(NewMod["filename"],OldServerMods)
+            if oldMod:
+                if oldMod["md5hash"] != NewMod["md5hash"]:
+                    os.remove(path + "/mods/" + oldMod["filename"])
+                    listModsToDownload.append(NewMod)
+        for OldMod in OldServerMods:
+            NewMod = self.findByName(OldMod["filename"],NewServerMods)
+            if not(NewMod):
+                os.remove(path + "/mods/" + oldMod["filename"])
+                continue
+            print(os.path.isfile(path + "/mods/" + oldMod["filename"]))
+            if not(os.path.exists(path + "/mods/" + oldMod["filename"])):
+                listModsToDownload.append(NewMod)
+        self.DownloadWorkerMain(path,listModsToDownload)
+
+
+
+
+
+    def DownloadWorkerMain(self,path,listMods):
+        self.labelCountMods.setText(f"Скачиваем моды: 0/{len(listMods)}")
+        for i, mod in enumerate(listMods):
+            print("downloadWorker", mod)
+            self.labelCountMods.setText(f"Скачиваем моды: {i+1}/{len(listMods)}")
+            self.GetConfig.DownloadMods(self.progressBar, path, mod)
+        else:
+            # QMessageBox.question(self, "Статус", "Все установленно!", QMessageBox.Ok)
+            self.labelCountMods.setText("Устоновка завершена!")
+
+
+
+
+class DownloadWorker(QThread):
+    def __init__(self, labelCountMods,ProgressBar,GetConfig,path,listMods,parent = None):
+        super().__init__()
+        self.labelCountMods = labelCountMods
+        self.GetConfig = GetConfig
+        self.ProgressBar = ProgressBar
+        self.path = path
+        self.listMods = listMods
+    def run(self):
         pass
 
 
+    def stop(self):
+        self.terminate()
 
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
