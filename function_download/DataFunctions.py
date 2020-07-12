@@ -1,12 +1,15 @@
 import  requests
 import json
 import zipfile
-servers = "https://raw.githubusercontent.com/Taruu/TANDOTS/master/server.json"
 import os
 import shutil
 import cloudscraper
 from bs4 import BeautifulSoup
+
 #TODO logger
+
+servers = "https://raw.githubusercontent.com/Taruu/TANDOTS/master/server.json"
+
 class GetConfig:
     def __init__(self,Settings):
         self.Settings = Settings
@@ -29,7 +32,8 @@ class GetConfig:
                     self.Settings.setValue(serverWeb,tempServerSettings)
 
 
-    def CloneGit(self, url, path_zip, progressBar): #TODO progressBar add and etc...
+    @staticmethod
+    def CloneGit(url, path_zip, progressBar): #TODO progressBar add and etc...
         allZip = requests.get(url,stream=True)
         content_length = allZip.headers.get("Content-Length")
         while not(content_length):
@@ -47,7 +51,7 @@ class GetConfig:
             path_extacted = zip_ref.namelist()[0]
             zip_ref.extractall(path=work_path)
 
-        for absolute,folder,items in os.walk(work_path+"/"+path_extacted):
+        for absolute, _,items in os.walk(work_path+"/"+path_extacted):
             absolute_path_need = absolute.replace("TBN3-master/", "")
 
             for file in items:
@@ -62,7 +66,8 @@ class GetConfig:
         os.remove(path_zip)
 
 
-    def ListMods(self,path_work_folder):
+    @staticmethod
+    def ListMods(path_work_folder):
         with open(path_work_folder+"/modlistdownload.json") as modlist_file:
             newModList = json.load(modlist_file)
         print(len(newModList))

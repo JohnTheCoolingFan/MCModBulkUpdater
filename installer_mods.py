@@ -1,17 +1,12 @@
 import sys
 import os
-import PyQt5
-from PyQt5 import QtGui,QtCore
-from PyQt5.QtGui import QTextCursor
-from PyQt5.QtCore import QUrl
-from PyQt5 import QtWidgets,uic
-
-from PyQt5.QtCore import QSize, QCoreApplication, QSettings,Qt,QThread
+from pathlib import Path
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtCore import QSettings, QThread
 from PyQt5.QtWidgets import QMessageBox
-from function_download import DataFunctions,ModsDownload
-import sys
-from pathlib import Path,PurePath
-from datetime import datetime
+from function_download import DataFunctions
+
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
@@ -66,7 +61,7 @@ class Ui(QtWidgets.QMainWindow):
             else:
                 self.labelPathInfo.setText("Not path mods!")
                 self.path = None
-                buttonReply = QMessageBox.question(self, 'Не нашли папку Mods...', "Не найдена папка mods создать? По адресу:\n{}".format(path), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                buttonReply = QMessageBox.question(self, 'Не нашли папку Mods...', "Не найдена папка mods, создать? По адресу:\n{}".format(path), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                 if buttonReply == QMessageBox.Yes:
                     self.labelPathInfo.setText("Path is OK!")
                     self.saveNowPath()
@@ -81,7 +76,7 @@ class Ui(QtWidgets.QMainWindow):
 
 
 
-    def takeServer(self,text):
+    def takeServer(self, text):
         self.nowServer = self.settings.value(text.lower())
         if self.nowServer["path"]:
             self.pathMinecraft.setText(self.nowServer["path"])
@@ -106,7 +101,8 @@ class Ui(QtWidgets.QMainWindow):
         self.settings.setValue(self.nowServer["name"], self.nowServer)
         self.check_path()
 
-    def findByName(self,name,ListMods): #Костыль лять
+    @staticmethod
+    def findByName(name, ListMods): #Костыль лять
         for mod in ListMods:
             if mod["filename"] == name:
                 return mod
@@ -168,7 +164,7 @@ class Ui(QtWidgets.QMainWindow):
 
 
 class DownloadWorker(QThread):
-    def __init__(self, labelCountMods,ProgressBar,GetConfig,path,listMods,parent = None):
+    def __init__(self, labelCountMods, ProgressBar, GetConfig,path, listMods, parent=None):
         super().__init__()
         self.labelCountMods = labelCountMods
         self.GetConfig = GetConfig
