@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Выберете сборку</string>
+     <string>Выберите сборку</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="pathMinecraft">
