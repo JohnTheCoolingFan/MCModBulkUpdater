@@ -101,8 +101,7 @@ class Ui(QtWidgets.QMainWindow):
         self.settings.setValue(self.nowServer["name"], self.nowServer)
         self.check_path()
 
-    @staticmethod
-    def findByName(name, ListMods): #Костыль лять
+    def findByName(self,name, ListMods): #Костыль лять
         for mod in ListMods:
             if mod["filename"] == name:
                 return mod
@@ -137,7 +136,10 @@ class Ui(QtWidgets.QMainWindow):
         for OldMod in OldServerMods:
             NewMod = self.findByName(OldMod["filename"],NewServerMods)
             if not(NewMod):
-                os.remove(path + "/mods/" + oldMod["filename"])
+                try:
+                    os.remove(path + "/mods/" + oldMod["filename"])
+                except:
+                    pass
                 continue
             modfile = Path(path + "/mods/" + NewMod["filename"])
             if not(modfile.exists()):

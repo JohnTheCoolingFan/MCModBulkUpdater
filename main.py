@@ -2,12 +2,12 @@ import requests as req
 import hashlib
 import os
 import json
-import cloudscraper
+import cfscrape
 from bs4 import BeautifulSoup
 
 class MCBulkDownloader:
     def __init__(self, mod_list_source: str):
-        self._scraper = cloudscraper.create_scraper()
+        self._scraper = cfscrape.create_scraper()
         if os.path.exists(mod_list_source):
             with open(mod_list_source, 'r') as mlfile:
                 self.mld = json.load(mlfile)

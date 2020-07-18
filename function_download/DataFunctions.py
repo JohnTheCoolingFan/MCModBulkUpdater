@@ -5,6 +5,7 @@ import os
 import shutil
 import cloudscraper
 from bs4 import BeautifulSoup
+import hashlib
 
 #TODO logger
 
@@ -32,8 +33,7 @@ class GetConfig:
                     self.Settings.setValue(serverWeb,tempServerSettings)
 
 
-    @staticmethod
-    def CloneGit(url, path_zip, progressBar): #TODO progressBar add and etc...
+    def CloneGit(self,url, path_zip, progressBar): #TODO progressBar add and etc...
         allZip = requests.get(url,stream=True)
         content_length = allZip.headers.get("Content-Length")
         while not(content_length):
@@ -46,7 +46,9 @@ class GetConfig:
                 ZipClone.write(chunk)
                 ZipClone.flush()
             ZipClone.close()
+
         work_path = os.path.dirname(path_zip)
+
         with zipfile.ZipFile(path_zip, 'r') as zip_ref:
             path_extacted = zip_ref.namelist()[0]
             zip_ref.extractall(path=work_path)
@@ -66,8 +68,8 @@ class GetConfig:
         os.remove(path_zip)
 
 
-    @staticmethod
-    def ListMods(path_work_folder):
+    def ListMods(self,path_work_folder):
+        print(path_work_folder)
         with open(path_work_folder+"/modlistdownload.json") as modlist_file:
             newModList = json.load(modlist_file)
         print(len(newModList))
@@ -77,9 +79,9 @@ class GetConfig:
         print("pathh",path_work_folder)
         path_for_mods = path_work_folder + f"/mods/{dataMod['filename']}"
         link = dataMod["link"]
+        hash_mod = dataMod["md5hash"]
         mod = self.scraper.get(link, stream=True)
         content_length = mod.headers.get("Content-Length")
-        print(mod.headers)
         if link.startswith('https://www.curseforge.com'):
             mod_screen = self.scraper.get(link)
             soup = BeautifulSoup(mod_screen.text)
@@ -105,6 +107,11 @@ class GetConfig:
                 ModFile.write(chunk)
                 ModFile.flush()
             ModFile.close()
+        with open(path_for_mods,"rb") as ModFile:
+            HashBytes = ModFile.read()
+            readable_hash = hashlib.md5(HashBytes).hexdigest()
+        if readable_hash != hash_mod:
+            os.remove(path_for_mods)
         return True
 
 
