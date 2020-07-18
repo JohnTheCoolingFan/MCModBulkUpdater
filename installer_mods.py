@@ -90,11 +90,19 @@ class Ui(QtWidgets.QMainWindow):
 
     def takePath(self):
         if os.path.exists(self.pathMinecraft.text()):
-            self.pathMinecraft.setText(
-                QtWidgets.QFileDialog.getExistingDirectory(self, 'Open mods directory', self.pathMinecraft.text()))
+            temp_dir = QtWidgets.QFileDialog.getExistingDirectory(self, 'Open mods directory',self.pathMinecraft.text())
+            print("path", temp_dir)
+            if len(temp_dir) > 2:
+                self.pathMinecraft.setText(temp_dir)
+            else:
+                pass
         else:
-            self.pathMinecraft.setText(
-                QtWidgets.QFileDialog.getExistingDirectory(self, 'Open mods directory', str(Path.home())))
+            temp_dir = QtWidgets.QFileDialog.getExistingDirectory(self, 'Open mods directory', str(Path.home()))
+            print("path",temp_dir)
+            if len(temp_dir)>2:
+                self.pathMinecraft.setText(temp_dir)
+            else:
+                pass
 
 
         self.nowServer["path"] = self.pathMinecraft.text()
