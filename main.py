@@ -5,6 +5,8 @@ import json
 import cfscrape
 from bs4 import BeautifulSoup
 
+# TODO: reformat mod list or bring back glob
+
 class MCBulkDownloader:
     def __init__(self, mod_list_source: str):
         self._scraper = cfscrape.create_scraper()
