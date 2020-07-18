@@ -6,6 +6,8 @@ import cfscrape
 from bs4 import BeautifulSoup
 
 # TODO: reformat mod list or bring back glob
+# TODO: nice curses ui
+# TODO: async
 
 class MCBulkDownloader:
     def __init__(self, mod_list_source: str):
