@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 # TODO: nice curses ui
 # TODO: async
 
-# This class is supposed to be highly integrateable. You can change some behavior by simply creating subclass and overriding some methods
+# This class is supposed to be highly integrateable.
+# You can change some behavior by simply creating subclass and overriding some methods
 
 class MCBulkDownloader:
     def __init__(self, mld: list):
@@ -64,12 +65,14 @@ class MCBulkDownloader:
         else:
             return False
 
+    # Override this method to change where to output progress info
     @staticmethod
     def print_info(msg: str):
         print(msg)
 
+    # Override this method to change how to ask about optional mods
     @classmethod
-    def from_url_or_file(cls, ml_source: str):
+    def from_url_or_file(cls, ml_source: str) -> bool:
         if os.path.exists(ml_source):
             with open(ml_source, 'r') as mlfile:
                 mld = json.load(mlfile)
