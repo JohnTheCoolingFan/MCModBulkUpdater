@@ -10,17 +10,9 @@ from bs4 import BeautifulSoup
 # TODO: async
 
 class MCBulkDownloader:
-    def __init__(self, mod_list_source: str):
+    def __init__(self, mld: list):
         self._scraper = cfscrape.create_scraper()
-        if os.path.exists(mod_list_source):
-            with open(mod_list_source, 'r') as mlfile:
-                self.mld = json.load(mlfile)
-        else:
-            # In case mod list is not a local file, but a url to a file. For example:
-            #     'https://raw.githubusercontent.com/JohnTheCoolingFan/TBN3/master/modlistdownload.json'
-            rqst = req.get(mod_list_source)
-            if rqst.status_code == 200:
-                self.mld = rqst.json()
+        self.mld = mld
 
     def download_mod(self, modinfo):
         if modinfo['optional']:
@@ -70,6 +62,21 @@ class MCBulkDownloader:
         else:
             return False
 
+    @classmethod
+    def from_url_or_file(cls, ml_source: str):
+        if os.path.exists(ml_source):
+            with open(ml_source, 'r') as mlfile:
+                mld = json.load(mlfile)
+        else:
+            # In case mod list is not a local file, but a url to a file. For example:
+            #     'https://raw.githubusercontent.com/JohnTheCoolingFan/TBN3/master/modlistdownload.json'
+            rqst = req.get(ml_source)
+            if rqst.status_code == 200:
+                mld = rqst.json()
+
+        return cls(mld)
+
+
 if __name__ == '__main__':
-    mcbd = MCBulkDownloader('modlistdownload.json')
+    mcbd = MCBulkDownloader.from_url_or_file('modlistdownload.json')
     mcbd.start_download()
