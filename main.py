@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 # TODO: nice curses ui
 # TODO: async
 
+# This class is supposed to be highly integrateable. You can change some behavior by simply creating subclass and overriding some methods
+
 class MCBulkDownloader:
     def __init__(self, mld: list):
         self._scraper = cfscrape.create_scraper()
@@ -18,7 +20,7 @@ class MCBulkDownloader:
         if modinfo['optional']:
             if not self.optional_ask('Do you want to download {}?'.format(modinfo['filename'])):
                 return
-        print('Downloading {}'.format(modinfo['filename']))
+        self.print_info('Downloading {}'.format(modinfo['filename']))
         if modinfo['link'].startswith('https://www.curseforge.com'):
             mod_screen = self._scraper.get(modinfo['link'], stream=True)
 
@@ -33,7 +35,7 @@ class MCBulkDownloader:
                 mod_file.write(chunk)
                 mod_file.flush()
             mod_file.close()
-        print('Finished downloading {}'.format(modinfo['filename']))
+        self.print_info('Finished downloading {}'.format(modinfo['filename']))
 
     def start_download(self):
         for mod in self.mld:
@@ -61,6 +63,10 @@ class MCBulkDownloader:
             return True
         else:
             return False
+
+    @staticmethod
+    def print_info(msg: str):
+        print(msg)
 
     @classmethod
     def from_url_or_file(cls, ml_source: str):
