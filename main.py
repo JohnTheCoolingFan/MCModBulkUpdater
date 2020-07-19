@@ -60,10 +60,10 @@ class MCBulkDownloader:
     # Override this method to change how to ask about optional mods
     @staticmethod
     def optional_ask(question):
-        answer = input(question+' [Y/n]')
-        if answer.lower() in ['no', 'n']:
+        answer = input(question+' [Y/n]').lower()
+        if answer in ['nope', 'nop', 'no', 'n']:
             return False
-        elif answer.lower() in ['yes', 'ye', 'y', '']:
+        elif answer in ['yes', 'ye', 'y', '']:
             return True
         else:
             return False
