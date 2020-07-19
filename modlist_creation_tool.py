@@ -15,14 +15,17 @@ class ModListCreator:
             self.mld = json.load(mlfile)
             mlfile.close()
 
+    # Start mod list filling
     def start(self):
         files = glob.glob('*.jar')
         files.sort()
 
         for file in files:
             self.add_mod(file)
+        # And write it when finished
         self.write()
 
+    # Add mod info to list
     def add_mod(self, filename: str):
         if filename not in [mentry['filename'] for mentry in self.mld]:
             link = self.ask_link(filename)
@@ -36,6 +39,7 @@ class ModListCreator:
         else:
             print('{} already in mod list. Skipping.'.format(filename))
 
+    # Write the list
     def write(self):
         with open(self.filename, 'w') as mlfile:
             json.dump(self.mld, mlfile, sort_keys=True, indent=4)
