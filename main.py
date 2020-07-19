@@ -17,6 +17,7 @@ class MCBulkDownloader:
         self._scraper = cfscrape.create_scraper()
         self.mld = mld
 
+    # Downloads one mod
     def download_mod(self, modinfo):
         if modinfo['optional']:
             if not self.optional_ask('Do you want to download {}?'.format(modinfo['filename'])):
@@ -38,6 +39,7 @@ class MCBulkDownloader:
             mod_file.close()
         self.print_info('Finished downloading {}'.format(modinfo['filename']))
 
+    # Starts downloading mods from list
     def start_download(self):
         for mod in self.mld:
             filename = mod['filename']
@@ -55,6 +57,7 @@ class MCBulkDownloader:
             else:
                 self.download_mod(mod)
 
+    # Override this method to change how to ask about optional mods
     @staticmethod
     def optional_ask(question):
         answer = input(question+' [Y/n]')
@@ -70,7 +73,7 @@ class MCBulkDownloader:
     def print_info(msg: str):
         print(msg)
 
-    # Override this method to change how to ask about optional mods
+    # Takes url or file, parses its contents and passes mod list to MCBulkDownloader constructor
     @classmethod
     def from_url_or_file(cls, ml_source: str) -> bool:
         if os.path.exists(ml_source):
