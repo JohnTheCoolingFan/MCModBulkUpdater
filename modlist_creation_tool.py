@@ -7,31 +7,43 @@ import argparse
 # It shoukd ask you for download link and glob (if enabled)
 # After that it generates mod list
 
-parser = argparse.ArgumentParser(description='Tool for easier creation of modlist.json')
-parser.add_argument('FILE', required=True, help='File to use')
-parser.add_argument('--no-glob', action='store_const', const=False, default=True, help='Don\'t ask for glob; Don\'t add glob')
+class ModListCreator:
+    def __init__(self, filename: str, add_glob: bool):
+        self.add_glob = add_glob
+        self.filename = filename
+        with open(filename, 'r') as mlfile:
+            self.mld = json.load(mlfile)
+            mlfile.close()
 
-args = vars(parser.parse_args())
+    def start(self):
+        files = glob.glob('*.jar')
+        files.sort()
 
-files = glob.glob('*.jar')
-files.sort()
+        for file in files:
+            self.add_mod(file)
+        self.write()
 
-with open(args['FILE'], 'r') as mlfile:
-    mld = json.load(mlfile)
-    for file in files:
-        if file not in [mentry['filename'] for mentry in mld]:
-            link = input('Download link for {}: '.format(file)).rstrip()
-            md5hash = hashlib.md5(open(file, 'rb').read()).hexdigest()
-            mentry = dict(link=link, filename=file, md5hash=md5hash)
-            if args['no-glob']:
-                mglob = input('Glob for {}: '.format(file)).rstrip()
+    def add_mod(self, filename: str):
+        if filename not in [mentry['filename'] for mentry in self.mld]:
+            link = input('Download link for {}: '.format(filename)).rstrip()
+            md5hash = hashlib.md5(open(filename, 'rb').read()).hexdigest()
+            mentry = dict(link=link, filename=filename, md5hash=md5hash)
+            if self.add_glob:
+                mglob = input('Glob for {}: '.format(filename)).rstrip()
                 mentry['glob'] = mglob
-            mld.append(mentry)
+            self.mld.append(mentry)
         else:
-            print('{} already in mod list. Skipping.'.format(file))
-    print('Finished gathering info, writing changes to file.')
-    mlfile.close()
+            print('{} already in mod list. Skipping.'.format(filename))
 
-with open(args['FILE'], 'w') as mlfile:
-    json.dump(mld, mlfile, indent=4, sort_jeys=True)
-    mlfile.close()
+    def write(self):
+        with open(self.filename, 'w') as mlfile:
+            json.dump(self.mld, mlfile, sort_keys=True, indent=4)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Tool for easier creation of modlist.json')
+    parser.add_argument('FILE', required=True, help='File to use')
+    parser.add_argument('--no-glob', action='store_const', const=False, default=True, help='Don\'t ask for glob; Don\'t add glob')
+    args = vars(parser.parse_args())
+
+    mlc = ModListCreator(args['FILE'], args['no-glob'])
+    mlc.start()
