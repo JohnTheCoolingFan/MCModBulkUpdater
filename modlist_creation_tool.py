@@ -40,6 +40,7 @@ class ModListCreator:
         with open(self.filename, 'w') as mlfile:
             json.dump(self.mld, mlfile, sort_keys=True, indent=4)
 
+    # Next three can be overriden to use with some sort of front-end
     @staticmethod
     def ask_link(filename: str) -> str:
         return input('Download link for {}: '.format(filename)).rstrip()
