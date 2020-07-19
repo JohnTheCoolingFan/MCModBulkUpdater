@@ -17,21 +17,21 @@ files = glob.glob('*.jar')
 files.sort()
 
 with open(args['FILE'], 'r') as mlfile:
-    mdl = json.load(mlfile)
+    mld = json.load(mlfile)
     for file in files:
-        if file not in [mentry['filename'] for mentry in mdl]:
+        if file not in [mentry['filename'] for mentry in mld]:
             link = input('Download link for {}: '.format(file)).rstrip()
             md5hash = hashlib.md5(open(file, 'rb').read()).hexdigest()
             mentry = dict(link=link, filename=file, md5hash=md5hash)
             if args['no-glob']:
                 mglob = input('Glob for {}: '.format(file)).rstrip()
                 mentry['glob'] = mglob
-            mdl.append(mentry)
+            mld.append(mentry)
         else:
             print('{} already in mod list. Skipping.'.format(file))
     print('Finished gathering info, writing changes to file.')
     mlfile.close()
 
 with open(args['FILE'], 'w') as mlfile:
-    json.dump(mdl, mlfile, indent=4, sort_jeys=True)
+    json.dump(mld, mlfile, indent=4, sort_jeys=True)
     mlfile.close()
