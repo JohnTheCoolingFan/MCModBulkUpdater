@@ -39,6 +39,24 @@ class ModListCreator:
         with open(self.filename, 'w') as mlfile:
             json.dump(self.mld, mlfile, sort_keys=True, indent=4)
 
+    @staticmethod
+    def ask_link(filename: str) -> str:
+        return input('Download link for {}: '.format(filename)).rstrip()
+
+    @staticmethod
+    def ask_glob(filename: str) -> str:
+        return input('Glob for {}: '.format(filename)).rstrip()
+
+    @staticmethod
+    def ask_optl(filename: str) -> bool:
+        answer = input('Is {} optional? [y/N] '.format(filename)).lower()
+        if answer in ['no', 'n', '']:
+            return False
+        elif answer in ['yes', 'ye', 'y']:
+            return True
+        else:
+            return True
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tool for easier creation of modlist.json')
     parser.add_argument('FILE', required=True, help='File to use')
