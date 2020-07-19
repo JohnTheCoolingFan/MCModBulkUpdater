@@ -14,6 +14,7 @@ parser.add_argument('--no-glob', action='store_const', const=False, default=True
 args = vars(parser.parse_args())
 
 files = glob.glob('*.jar')
+files.sort()
 
 with open(args['FILE'], 'r') as mlfile:
     mdl = json.load(mlfile)
