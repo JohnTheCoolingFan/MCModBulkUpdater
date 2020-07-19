@@ -25,11 +25,12 @@ class ModListCreator:
 
     def add_mod(self, filename: str):
         if filename not in [mentry['filename'] for mentry in self.mld]:
-            link = input('Download link for {}: '.format(filename)).rstrip()
+            link = self.ask_link(filename)
             md5hash = hashlib.md5(open(filename, 'rb').read()).hexdigest()
-            mentry = dict(link=link, filename=filename, md5hash=md5hash)
+            is_optional = self.ask_optl(filename)
+            mentry = dict(link=link, filename=filename, md5hash=md5hash, optional=is_optional)
             if self.add_glob:
-                mglob = input('Glob for {}: '.format(filename)).rstrip()
+                mglob = self.ask_glob(filename)
                 mentry['glob'] = mglob
             self.mld.append(mentry)
         else:
