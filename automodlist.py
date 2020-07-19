@@ -2,6 +2,10 @@ import glob
 import json
 import hashlib
 
+# Place this file into your mods dir and run it
+# It shoukd ask you for download link and glob (if enabled)
+# After that it generates mod list
+
 files = glob.glob('*')
 files.remove('automodlist.py')
 
@@ -20,5 +24,5 @@ with open('testconfig/modlistdownload.json', 'r') as mlfile:
     mlfile.close()
 
 with open('testconfig/modlistdownload.json', 'w') as mlfile:
-    json.dump(mdl, mlfile)
+    json.dump(mdl, mlfile, indent=4, sort_jeys=True)
     mlfile.close()
