@@ -1,10 +1,15 @@
 import glob
 import json
 import hashlib
+import argparse
 
 # Place this file into your mods dir and run it
 # It shoukd ask you for download link and glob (if enabled)
 # After that it generates mod list
+
+parser = argparse.ArgumentParser(description='Tool for easier creation of modlist.json')
+parser.add_argument('FILE', required=True, help='File to use')
+parser.add_argument('--no-glob', action='store_const', const=False, default=True, help='Don\'t ask for glob; Don\'t add glob')
 
 files = glob.glob('*')
 files.remove('automodlist.py')
