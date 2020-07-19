@@ -2,7 +2,7 @@ import requests as req
 import hashlib
 import os
 import json
-import cfscrape
+import cloudscraper
 from bs4 import BeautifulSoup
 
 # TODO: reformat mod list or bring back glob
@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 
 class MCBulkDownloader:
     def __init__(self, mld: list):
-        self._scraper = cfscrape.create_scraper()
+        self._scraper = cloudscraper.create_scraper()
         self.mld = mld
 
     # Downloads one mod
