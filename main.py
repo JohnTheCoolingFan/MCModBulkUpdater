@@ -5,7 +5,6 @@ import json
 import cloudscraper
 from bs4 import BeautifulSoup
 
-# TODO: reformat mod list or bring back glob
 # TODO: nice curses ui
 # TODO: async
 
