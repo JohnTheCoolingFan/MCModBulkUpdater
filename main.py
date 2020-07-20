@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import requests as req
 import hashlib
 import os
