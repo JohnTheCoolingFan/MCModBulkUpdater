@@ -19,7 +19,7 @@ class MCBulkDownloader:
     # Downloads one mod
     def download_mod(self, modinfo):
         if modinfo['optional']:
-            if not self.optional_ask('Do you want to download {}?'.format(modinfo['filename'])):
+            if not self.optional_ask(modinfo['filename']):
                 return
         self.print_info('Downloading {}'.format(modinfo['filename']))
         if modinfo['link'].startswith('https://www.curseforge.com'):
@@ -30,7 +30,7 @@ class MCBulkDownloader:
 
             mod_download = self._scraper.get("https://www.curseforge.com"+haslink.findAll("a", href=True)[0].get('href'),stream=True)
         else:
-            mod_download = req.get(modinfo['link'], stream=True)
+            mod_download = self._scraper.get(modinfo['link'], stream=True)
         with open('mods/'+modinfo['filename'], 'wb') as mod_file:
             for chunk in mod_download.iter_content(chunk_size=1024):
                 mod_file.write(chunk)
@@ -58,8 +58,8 @@ class MCBulkDownloader:
 
     # Override this method to change how to ask about optional mods
     @staticmethod
-    def optional_ask(question):
-        answer = input(question+' [Y/n]').lower()
+    def optional_ask(mod_name):
+        answer = input('Do you want to download {}? [Y/n] '.format(mod_name)).lower()
         if answer in ['nope', 'nop', 'no', 'n']:
             return False
         elif answer in ['yes', 'ye', 'y', '']:
@@ -78,6 +78,7 @@ class MCBulkDownloader:
         if os.path.exists(ml_source):
             with open(ml_source, 'r') as mlfile:
                 mld = json.load(mlfile)
+                mlfile.close()
         else:
             # In case mod list is not a local file, but a url to a file. For example:
             #     'https://raw.githubusercontent.com/JohnTheCoolingFan/TBN3/master/modlistdownload.json'
