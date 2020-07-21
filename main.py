@@ -75,7 +75,7 @@ class MCBulkDownloader:
 
     # Takes url or file, parses its contents and passes mod list to MCBulkDownloader constructor
     @classmethod
-    def from_url_or_file(cls, ml_source: str) -> bool:
+    def parse_url_or_file(cls, ml_source: str) -> list:
         if os.path.exists(ml_source):
             with open(ml_source, 'r') as mlfile:
                 mld = json.load(mlfile)
@@ -87,8 +87,11 @@ class MCBulkDownloader:
             if rqst.status_code == 200:
                 mld = rqst.json()
 
-        return cls(mld)
+        return mld
 
+    @classmethod
+    def from_url_or_file(cls, ml_source: str) -> cls:
+        return cls(cls.parse_url_or_file(ml_source))
 
 if __name__ == '__main__':
     mcbd = MCBulkDownloader.from_url_or_file('modlistdownload.json')
