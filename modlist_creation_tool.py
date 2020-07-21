@@ -23,8 +23,6 @@ class ModListCreator:
 
         for file in files:
             self.add_mod(file)
-        # And write it when finished
-        self.write()
 
     # Add mod info to list
     def add_mod(self, filename: str):
@@ -72,3 +70,4 @@ if __name__ == '__main__':
 
     mlc = ModListCreator(args['FILE'], args['no-glob'])
     mlc.start()
+    mlc.write()
