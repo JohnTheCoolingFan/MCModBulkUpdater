@@ -18,8 +18,8 @@ class DownloaderUI:
         self.cmd_output_win = curses.newwin(curses.LINES-10, curses.COLS-34, 7, 33) #pylint: disable=no-member
 
         # Populate list_root_win
-        self.list_root_win.addstr(1, 1, 'Mod count: <int>')
-        self.list_root_win.addstr(2, 1, 'Optional: <int/int>')
+        self.list_root_win.addstr(1, 1, 'Mod count:')
+        self.list_root_win.addstr(2, 1, 'Optional:')
 
         # Populate mod_list_win
         self.mod_list_win.addstr(0, 0, '>Test Filename') # test
@@ -39,7 +39,22 @@ class DownloaderUI:
         # Populate command_win
         self.command_win.addstr(self.command_win.getmaxyx()[0]-2, 1, '> ')
 
-        # Refresh all
+        self.refresh_all()
+
+        # Wait
+        stdscr.getch()
+
+    def set_mod_count(self, mod_count: int):
+        self.list_root_win.move(1, 12)
+        self.list_root_win.clrtoeol()
+        self.list_root_win.box()
+        self.list_root_win.addstr(1, 12, str(mod_count))
+
+    def set_optional_count(self, enabled_cnt: int, all_cnt: int):
+        self.list_root_win.addstr(2, 11, '         ')
+        self.list_root_win.addstr(2, 11, '{}/{}'.format(enabled_cnt, all_cnt))
+
+    def refresh_all(self):
         self.stdscr.refresh()
         self.list_root_win.refresh()
         self.mod_list_win.refresh()
@@ -48,10 +63,14 @@ class DownloaderUI:
         self.command_win.refresh()
         self.cmd_output_win.refresh()
 
-        # Wait
-        stdscr.getch()
+    def start(self):
+        pass
 
 def main(stdscr):
     dui = DownloaderUI(stdscr)
+    dui.set_mod_count(15)
+    dui.refresh_all()
+    dui.stdscr.getch()
+    dui.start()
 
 curses.wrapper(main)
