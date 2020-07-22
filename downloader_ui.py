@@ -100,6 +100,7 @@ def main(stdscr):
     dui.set_modpack_name('TBN3')
     dui.set_status('downloading')
     dui.set_game_dir('/home/jtcf/.minecraft/home/tbn3/')
+    dui.set_current_file('Test Filename.jar')
     dui.refresh_all()
     dui.stdscr.getch()
 
