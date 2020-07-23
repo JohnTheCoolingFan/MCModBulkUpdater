@@ -4,6 +4,7 @@ import curses
 class DownloaderUI:
     def __init__(self, stdscr):
         # Init all windows
+        # TODO: reduce amount of windows and use them more efficiently
         self.stdscr = stdscr
         self.stdscr.resize(5, 5)
         self.stdscr.box()
@@ -18,6 +19,7 @@ class DownloaderUI:
         self.command_win = curses.newwin(curses.LINES-6, curses.COLS-32, 6, 32) #pylint: disable=no-member
         self.command_win.box()
         self.cmd_prompt_win = curses.newwin(2, curses.COLS-34, curses.LINES-3, 33) #pylint: disable=no-member
+        self.cmd_prompt_textbox = curses.textpad.Textbox(curses.newwin(1, curses.COLS-36, curses.LINES-2, 35)) #pylint: disable=no-member
         self.cmd_output_win = curses.newwin(curses.LINES-10, curses.COLS-34, 7, 33) #pylint: disable=no-member
 
         # Populate list_root_win
