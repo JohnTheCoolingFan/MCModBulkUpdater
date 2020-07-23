@@ -64,7 +64,7 @@ class DownloaderUI:
 
     def set_modpack_name(self, modpack_name: str):
         self.status_container_win.addstr(1, 14, '                      ') # Clear previous contents
-        self.status_container_win.addstr(1, 14, modpack_name) # TODO: Add check for name lengh. Must be 22 or less. And also change themax size maybe
+        self.status_container_win.addstr(1, 14, modpack_name) # TODO: Add check for name lengh. Must be 22 or less. And also change the max size maybe
 
     def set_status(self, status: str):
         self.status_container_win.addstr(1, 45, '           ')
@@ -92,16 +92,17 @@ class DownloaderUI:
         self.cmd_prompt_win.refresh()
         self.cmd_output_win.refresh()
 
-def main(stdscr):
-    dui = DownloaderUI(stdscr)
-    dui.set_mod_count(15)
-    dui.set_optional_count(5, 10)
-    dui.set_modlist_name('Test Filename')
-    dui.set_modpack_name('TBN3')
-    dui.set_status('downloading')
-    dui.set_game_dir('/home/jtcf/.minecraft/home/tbn3/')
-    dui.set_current_file('Test Filename.jar')
-    dui.refresh_all()
-    dui.stdscr.getch()
+if __name__ == '__main__':
+    def main(stdscr):
+        dui = DownloaderUI(stdscr)
+        dui.set_mod_count(15)
+        dui.set_optional_count(5, 10)
+        dui.set_modlist_name('Test Filename')
+        dui.set_modpack_name('TBN3')
+        dui.set_status('downloading')
+        dui.set_game_dir('/home/jtcf/.minecraft/home/tbn3/')
+        dui.set_current_file('Test Filename.jar')
+        dui.refresh_all()
+        dui.stdscr.getch()
 
-curses.wrapper(main)
+    curses.wrapper(main)
