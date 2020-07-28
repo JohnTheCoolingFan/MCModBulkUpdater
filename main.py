@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 # TODO: nice curses ui
 # TODO: async
 
+
 # Exceptions
 class MCBDError(Exception):
     """Base class for exceptions in this module"""
@@ -35,7 +36,6 @@ class ModDownloadError(MCBDError):
 
 # This class is supposed to be highly integrateable.
 # You can change some behavior by simply creating subclass and overriding some methods
-
 class MCBulkDownloader:
     def __init__(self, mld: list):
         self._scraper = cloudscraper.create_scraper()
