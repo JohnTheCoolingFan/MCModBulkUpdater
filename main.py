@@ -16,7 +16,7 @@ class MCBDError(Exception):
     def __init__(self):
         pass
 
-class CurseForgeScrapeError(MCBDError):
+class CFScrapeError(MCBDError):
     """Raised when scraping download from curseforge fails"""
 
     def __init__(self, filename, link, status_code):
@@ -40,7 +40,7 @@ class MCBulkDownloader:
     def __init__(self, mld: list):
         self._scraper = cloudscraper.create_scraper()
         self.mld = mld
-        self.error_count = 0
+        self.errors = []
 
     def get_mod_download(self, modinfo):
         # TODO: raise exception
@@ -53,9 +53,7 @@ class MCBulkDownloader:
 
                 mod_download = self._scraper.get("https://www.curseforge.com"+haslink.findAll("a", href=True)[0].get('href'),stream=True)
             else:
-                self.print_info('Error downloading {} (scraper stage), status code: {}'.format(modinfo['filename'], mod_screen.status_code))
-                self.error_count += 1
-                return None
+                raise CFScrapeError(modinfo['filename'], modinfo['link'], mod_screen.status_code)
         else:
             mod_download = self._scraper.get(modinfo['link'], stream=True)
 
@@ -67,17 +65,24 @@ class MCBulkDownloader:
             if not self.optional_ask(modinfo['filename']):
                 return
         self.print_info('Downloading {}'.format(modinfo['filename']))
-        if mod_download := self.get_mod_download(modinfo):
-            if mod_download.status_code == 200:
-                with open('mods/'+modinfo['filename'], 'wb') as mod_file:
-                    for chunk in mod_download.iter_content(chunk_size=1024):
-                        mod_file.write(chunk)
-                        mod_file.flush()
-                    mod_file.close()
-                self.print_info('Finished downloading {}'.format(modinfo['filename']))
-            else:
-                self.print_info('Error downloading {} (download stage), status code: {}'.format(modinfo['filename'], mod_download.status_code))
-                self.error_count += 1
+        try:
+            mod_download = self.get_mod_download(modinfo)
+        except CFScrapeError as cfse:
+            self.print_info('Failed to scrape curseforge download page for {}. Status code: {}'.format(cfse.filename, cfse.status_code))
+            self.errors.append(cfse)
+        else:
+            try:
+                if mod_download.status_code == 200:
+                    with open('mods/'+modinfo['filename'], 'wb') as mod_file:
+                        for chunk in mod_download.iter_content(chunk_size=1024):
+                            mod_file.write(chunk)
+                            mod_file.flush()
+                        mod_file.close()
+                    self.print_info('Finished downloading {}'.format(modinfo['filename']))
+                else:
+                    raise ModDownloadError(modinfo['filename'], modinfo['link'], mod_download.status_code)
+            except ModDownloadError as mde:
+                self.print_info('Failed to download {}. Status code: {}'.format(mde.filename, mde.status_code))
 
     # Starts downloading mods from list
     def start_download(self):
@@ -96,7 +101,7 @@ class MCBulkDownloader:
                         self.download_mod(mod)
             else:
                 self.download_mod(mod)
-        self.print_info('Finished downloading all the mods. Failed: {}'.format(self.error_count))
+        #self.print_info('Finished downloading all the mods. Failed: {}'.format(self.error_count))
         self.error_count = 0
 
     # Override this method to change how to ask about optional mods
