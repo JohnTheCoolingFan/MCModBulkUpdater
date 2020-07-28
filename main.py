@@ -41,9 +41,9 @@ class MCBulkDownloader:
                     mod_file.write(chunk)
                     mod_file.flush()
                 mod_file.close()
+            self.print_info('Finished downloading {}'.format(modinfo['filename']))
         else:
             self.print_info('Error downloading {} (download stage), status code: {}'.format(modinfo['filename'], mod_download.status_code))
-        self.print_info('Finished downloading {}'.format(modinfo['filename']))
 
     # Starts downloading mods from list
     def start_download(self):
