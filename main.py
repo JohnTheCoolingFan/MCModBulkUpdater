@@ -43,7 +43,6 @@ class MCBulkDownloader:
         self.errors = []
 
     def get_mod_download(self, modinfo):
-        # TODO: raise exception
         if modinfo['link'].startswith('https://www.curseforge.com'):
             mod_screen = self._scraper.get(modinfo['link'], stream=True)
             if mod_screen.status_code == 200:
