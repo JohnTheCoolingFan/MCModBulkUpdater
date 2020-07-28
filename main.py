@@ -9,6 +9,30 @@ from bs4 import BeautifulSoup
 # TODO: nice curses ui
 # TODO: async
 
+# Exceptions
+class MCBDError(Exception):
+    """Base class for exceptions in this module"""
+
+    def __init__(self):
+        pass
+
+class CurseForgeScrapeError(MCBDError):
+    """Raised when scraping download from curseforge fails"""
+
+    def __init__(self, filename, link, status_code):
+        self.filename = filename
+        self.link = link
+        self.status_code = status_code
+
+class ModDownloadError(MCBDError):
+    """Raised when request for mod download fails"""
+
+    def __init__(self, filename, link, status_code):
+        self.filename = filename
+        self.link = link
+        self.status_code = status_code
+
+
 # This class is supposed to be highly integrateable.
 # You can change some behavior by simply creating subclass and overriding some methods
 
