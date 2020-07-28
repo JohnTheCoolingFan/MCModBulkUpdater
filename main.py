@@ -25,18 +25,24 @@ class MCBulkDownloader:
         self.print_info('Downloading {}'.format(modinfo['filename']))
         if modinfo['link'].startswith('https://www.curseforge.com'):
             mod_screen = self._scraper.get(modinfo['link'], stream=True)
+            if mod_screen.status_code == 200:
 
-            soup = BeautifulSoup(mod_screen.text,features="html.parser")
-            haslink = soup.findAll("p", {"class": "text-sm"})[0]
+                soup = BeautifulSoup(mod_screen.text,features="html.parser")
+                haslink = soup.findAll("p", {"class": "text-sm"})[0]
 
-            mod_download = self._scraper.get("https://www.curseforge.com"+haslink.findAll("a", href=True)[0].get('href'),stream=True)
+                mod_download = self._scraper.get("https://www.curseforge.com"+haslink.findAll("a", href=True)[0].get('href'),stream=True)
+            else:
+                self.print_info('Error downloading {} (scraper stage), status code: {}'.format(modinfo['filename'], mod_screen.status_code))
         else:
             mod_download = self._scraper.get(modinfo['link'], stream=True)
-        with open('mods/'+modinfo['filename'], 'wb') as mod_file:
-            for chunk in mod_download.iter_content(chunk_size=1024):
-                mod_file.write(chunk)
-                mod_file.flush()
-            mod_file.close()
+        if mod_download.status_code == 200:
+            with open('mods/'+modinfo['filename'], 'wb') as mod_file:
+                for chunk in mod_download.iter_content(chunk_size=1024):
+                    mod_file.write(chunk)
+                    mod_file.flush()
+                mod_file.close()
+        else:
+            self.print_info('Error downloading {} (download stage), status code: {}'.format(modinfo['filename'], mod_download.status_code))
         self.print_info('Finished downloading {}'.format(modinfo['filename']))
 
     # Starts downloading mods from list
