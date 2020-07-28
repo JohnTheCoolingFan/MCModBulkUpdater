@@ -100,7 +100,7 @@ class MCBulkDownloader:
                         self.download_mod(mod)
             else:
                 self.download_mod(mod)
-        #self.print_info('Finished downloading all the mods. Failed: {}'.format(self.error_count))
+        self.print_info('Finished downloading mods. Errors count: {}\nList of failed mods:\n{}'.format(len(self.errors), '\n'.join([error.filename for error in self.errors])))
         self.error_count = 0
 
     # Override this method to change how to ask about optional mods
