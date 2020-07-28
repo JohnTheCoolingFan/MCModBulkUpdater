@@ -90,7 +90,7 @@ class MCBulkDownloader:
         return mld
 
     @classmethod
-    def from_url_or_file(cls, ml_source: str) -> cls:
+    def from_url_or_file(cls, ml_source: str):
         return cls(cls.parse_url_or_file(ml_source))
 
 if __name__ == '__main__':
