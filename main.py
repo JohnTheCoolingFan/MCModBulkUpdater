@@ -16,6 +16,7 @@ class MCBulkDownloader:
     def __init__(self, mld: list):
         self._scraper = cloudscraper.create_scraper()
         self.mld = mld
+        self.error_count = 0
 
     def get_mod_download(self, modinfo):
         # TODO: raise exception
@@ -29,6 +30,7 @@ class MCBulkDownloader:
                 mod_download = self._scraper.get("https://www.curseforge.com"+haslink.findAll("a", href=True)[0].get('href'),stream=True)
             else:
                 self.print_info('Error downloading {} (scraper stage), status code: {}'.format(modinfo['filename'], mod_screen.status_code))
+                self.error_count += 1
                 return None
         else:
             mod_download = self._scraper.get(modinfo['link'], stream=True)
@@ -51,6 +53,7 @@ class MCBulkDownloader:
                 self.print_info('Finished downloading {}'.format(modinfo['filename']))
             else:
                 self.print_info('Error downloading {} (download stage), status code: {}'.format(modinfo['filename'], mod_download.status_code))
+                self.error_count += 1
 
     # Starts downloading mods from list
     def start_download(self):
@@ -69,6 +72,7 @@ class MCBulkDownloader:
                         self.download_mod(mod)
             else:
                 self.download_mod(mod)
+        self.print_info('Finished downloading all the mods. Failed: {}'.format(self.error_count))
 
     # Override this method to change how to ask about optional mods
     @staticmethod
