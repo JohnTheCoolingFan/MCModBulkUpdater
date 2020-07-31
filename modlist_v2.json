@@ -1,0 +1,12 @@
+{
+    "name": "Test modpack",
+    "modlist": [
+        {
+            "type": "curseforge",
+            "filename": "ThermalDynamics.jar",
+            "addonID": 227443,
+            "fileID": 2920505,
+            "optional": false
+        }
+    ]
+}
